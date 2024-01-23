@@ -1,5 +1,7 @@
 import time
 
+from decorators import alter_sum
+
 
 def cache(func):
     cache = {}
@@ -25,3 +27,7 @@ def heavy_func(a, b):
 print (heavy_func(5,5))
 print (heavy_func(6,5))
 print (heavy_func(5,5))
+
+
+x = alter_sum(1,2, test=True)
+x = alter_sum([1,2,3], [1,2,3], test=True)
