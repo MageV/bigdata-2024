@@ -1,7 +1,7 @@
 class Cat:
     _already:str=""
     def greet(self,name=''):
-        if not self._already:
+        if self._already!=name:
             self._already=name
             print(f"Hello I'm {name}")
         else:
@@ -11,4 +11,4 @@ class Cat:
 cat=Cat()
 cat.greet('cat')
 cat.greet('cat')
-cat.greet('cat')
+cat.greet('None')
