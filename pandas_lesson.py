@@ -22,4 +22,4 @@ def generate(rows_count=1):
 
 
 frame=generate(10)
-frame.to_excel('data/frms.xls',engine='openpyxl')
+frame.to_excel('data/customers.xlsx',index=False,header=True,engine='openpyxl')
