@@ -21,4 +21,5 @@ def generate(rows_count=1):
     return df
 
 
-generate(10)
+frame=generate(10)
+frame.to_excel('data/frms.xls',engine='openpyxl')
