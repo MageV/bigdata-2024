@@ -17,6 +17,7 @@ def generate(rows_count=1):
     print(dataset)
     df = pd.DataFrame(data=dataset, columns=['date', 'customers_count','country', 'status'])
     print(df)
+    return df
 
 
 generate(10)
