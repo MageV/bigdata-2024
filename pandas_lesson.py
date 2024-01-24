@@ -24,3 +24,4 @@ def generate(rows_count=1):
 frame = generate(10)
 frame.to_excel('data/customers.xlsx', index=False, header=True, engine='openpyxl')
 frame2 = pd.read_excel('data/customers.xlsx', index_col='date',converters={'country':str.upper})
+print(frame2)
