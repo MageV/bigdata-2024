@@ -42,7 +42,4 @@ with parallel_backend('multiprocessing'):
     y_pred = best_tree.predict(X_test)
     score = f1_score(Y_test, y_pred, average='micro')
     print(f"RandSearchCV score_f1={score}")
-    #    step += 1
-#    if step > 20:
-#        break
 
