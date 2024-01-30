@@ -1,12 +1,11 @@
 import numpy as np
 import pandas as pd
-from sklearn import tree
-from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, ConfusionMatrixDisplay
-from sklearn.model_selection import train_test_split, GridSearchCV,RandomizedSearchCV
-from sklearn.tree import DecisionTreeClassifier
 from joblib import parallel_backend
-from matplotlib import  pyplot as plt
-import graphviz
+from matplotlib import pyplot as plt
+from sklearn import tree
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
 
 df = pd.read_csv('/home/master/Documents/bd/dogs.csv',index_col=0)
 df.columns=['Furry','Barks','Climbs','Species']
