@@ -26,7 +26,7 @@ with parallel_backend('multiprocessing'):
         'criterion': ('gini', 'log_loss', 'entropy'),
         'min_samples_split': range(2, 32),
         'max_depth': range(1, 10),
-        'min_samples_leaf':range(1,32),
+        'min_samples_leaf':range(1,10),
     }
     model = DecisionTreeClassifier()
     grid_search = GridSearchCV(model, param_grid=param_grid,scoring='f1_micro')
