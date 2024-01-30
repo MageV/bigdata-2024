@@ -33,13 +33,15 @@ with parallel_backend('multiprocessing'):
     grid_search.fit(X_train, Y_train)
     best_tree=grid_search.best_estimator_
     y_pred = best_tree.predict(X_test)
-    score=f1_score(Y_test,y_pred,average='micro')
-    print(f"GridSearchCV score_f1={score}")
+    score_1=f1_score(Y_test,y_pred,average='micro')
+    print(f"GridSearchCV score_f1={score_1}")
+    print(grid_search.best_params_)
     model2=DecisionTreeClassifier()
     rand_search=RandomizedSearchCV(model2,param_grid,scoring='f1_micro')
     rand_search.fit(X_train, Y_train)
     best_tree=rand_search.best_estimator_
     y_pred = best_tree.predict(X_test)
-    score = f1_score(Y_test, y_pred, average='micro')
-    print(f"RandSearchCV score_f1={score}")
+    score_2 = f1_score(Y_test, y_pred, average='micro')
+    print(f"RandSearchCV score_f1={score_2}")
+    print(grid_search.best_params_)
 
