@@ -29,7 +29,7 @@ with parallel_backend('multiprocessing'):
         'min_samples_leaf':range(1,10)
     }
     model = DecisionTreeClassifier()
-    grid_search = GridSearchCV(model, param_grid=param_grid,verbose=3,  scoring='f1_micro')
+    grid_search = GridSearchCV(model, param_grid=param_grid,scoring='f1_micro')
     grid_search.fit(X_train, Y_train)
     best_tree=grid_search.best_estimator_
     y_pred = best_tree.predict(X_test)
