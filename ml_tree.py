@@ -2,12 +2,12 @@ import multiprocessing
 import os
 
 import pandas as pd
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, accuracy_score
 from sklearn.model_selection import train_test_split, GridSearchCV,RandomizedSearchCV
 from sklearn.tree import DecisionTreeClassifier
 from joblib import parallel_backend
-
-
+from sklearn.utils import compute_class_weight
+import numpy as np
 
 df = pd.read_csv('/home/master/Downloads/songs.csv')
 Y = df['artist']
@@ -26,22 +26,22 @@ with parallel_backend('multiprocessing'):
         'criterion': ('gini', 'log_loss', 'entropy'),
         'min_samples_split': range(2, 32),
         'max_depth': range(1, 10),
-        'min_samples_leaf':range(1,10)
+        'min_samples_leaf':range(1,10),
     }
     model = DecisionTreeClassifier()
     grid_search = GridSearchCV(model, param_grid=param_grid,scoring='f1_micro')
     grid_search.fit(X_train, Y_train)
     best_tree=grid_search.best_estimator_
     y_pred = best_tree.predict(X_test)
-    score_1=f1_score(Y_test,y_pred,average='micro')
-    print(f"GridSearchCV score_f1={score_1}")
+    score_1=accuracy_score(Y_test,y_pred)
+    print(f"GridSearchCV score={score_1}")
     print(grid_search.best_params_)
     model2=DecisionTreeClassifier()
     rand_search=RandomizedSearchCV(model2,param_grid,scoring='f1_micro')
     rand_search.fit(X_train, Y_train)
     best_tree=rand_search.best_estimator_
     y_pred = best_tree.predict(X_test)
-    score_2 = f1_score(Y_test, y_pred, average='micro')
-    print(f"RandSearchCV score_f1={score_2}")
+    score_2 = accuracy_score(Y_test, y_pred)
+    print(f"RandSearchCV score={score_2}")
     print(grid_search.best_params_)
 
