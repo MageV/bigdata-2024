@@ -31,7 +31,8 @@ with parallel_backend('multiprocessing'):
     y_pred = best_tree.predict(X_test)
     score_1 = f1_score(Y_test, y_pred, average='micro')
     print("GridSearchCV - DecisionTree")# score={score_1}")
-    #print(grid_search.best_params_)
+    print(grid_search.best_params_)
+    print(f'Best score:{grid_search.best_score_}')
     print(classification_report(Y_test,y_pred,target_names=target_names))
     y_pred_proba = best_tree.predict_proba(X_test)[::, 1]
     fpr, tpr, _ = roc_curve(Y_test, y_pred_proba)
@@ -59,8 +60,8 @@ with parallel_backend('multiprocessing'):
         y_pred = best_model.predict(X_test)
         score_1 = f1_score(Y_test, y_pred, average='micro')
         print(f"GridSearchCV - LogisticRegression")#score_f1={score_1}")
-        #print(f'best params:{search_model.best_params_}')
-        #print(f'best score:{search_model.best_score_}')
+        print(f'best params:{search_model.best_params_}')
+        print(f'best score:{search_model.best_score_}')
         print(classification_report(Y_test, y_pred, target_names=target_names))
     except:
         print("error")
