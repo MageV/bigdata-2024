@@ -3,10 +3,11 @@ import warnings
 import pandas as pd
 from joblib import parallel_backend
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, roc_curve, roc_auc_score
 from sklearn.metrics import f1_score
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.tree import DecisionTreeClassifier
+import matplotlib.pyplot as plt
 
 warnings.filterwarnings("ignore")
 
@@ -29,9 +30,15 @@ with parallel_backend('multiprocessing'):
     best_tree = grid_search.best_estimator_
     y_pred = best_tree.predict(X_test)
     score_1 = f1_score(Y_test, y_pred, average='micro')
-    #print(f"GridSearchCV score={score_1}")
+    print("GridSearchCV - DecisionTree")# score={score_1}")
     #print(grid_search.best_params_)
     print(classification_report(Y_test,y_pred,target_names=target_names))
+    y_pred_proba = best_tree.predict_proba(X_test)[::, 1]
+    fpr, tpr, _ = roc_curve(Y_test, y_pred_proba)
+    auc = roc_auc_score(Y_test, y_pred_proba)
+    plt.plot(fpr,tpr,label=str(auc))
+    plt.legend(loc=5)
+    plt.show()
 with parallel_backend('multiprocessing'):
     param_grid_lr = {
         'penalty': ('l1', 'l2', 'elasticnet'),
@@ -51,9 +58,15 @@ with parallel_backend('multiprocessing'):
         best_model = search_model.best_estimator_
         y_pred = best_model.predict(X_test)
         score_1 = f1_score(Y_test, y_pred, average='micro')
-        #print(f"GridSearchCV score_f1={score_1}")
+        print(f"GridSearchCV - LogisticRegression")#score_f1={score_1}")
         #print(f'best params:{search_model.best_params_}')
         #print(f'best score:{search_model.best_score_}')
         print(classification_report(Y_test, y_pred, target_names=target_names))
     except:
         print("error")
+    y_pred_proba=best_model.predict_proba(X_test)[::,1]
+    fpr,tpr,_=roc_curve(Y_test,y_pred_proba)
+    auc=roc_auc_score(Y_test,y_pred_proba)
+    plt.plot(fpr, tpr, label=str(auc))
+    plt.legend(loc=5)
+    plt.show()
