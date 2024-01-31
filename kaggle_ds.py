@@ -1,14 +1,14 @@
-import pandas as pd
-from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, ConfusionMatrixDisplay
-from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report
-from joblib import parallel_backend
 import warnings
+
+import pandas as pd
+from joblib import parallel_backend
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report
+from sklearn.metrics import f1_score
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.tree import DecisionTreeClassifier
+
 warnings.filterwarnings("ignore")
-import matplotlib.pyplot as plt
 
 df = pd.read_csv('/home/master/Documents/bd/diabetes.csv')
 X= df[
