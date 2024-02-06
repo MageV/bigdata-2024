@@ -1,40 +1,38 @@
-import multiprocessing
-import os
-
-import pandas as pd
-from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, ConfusionMatrixDisplay
-from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-from joblib import parallel_backend
 import matplotlib.pyplot as plt
+import pandas as pd
+from joblib import parallel_backend
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import f1_score, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.model_selection import train_test_split
 
 df = pd.read_csv('/home/master/Downloads/songs.csv')
 Y = df['artist']
 X = df[['year', 'length', 'commas', 'exclamations', 'hyphens', 'colons']]
-#X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.25, random_state=42)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y,shuffle=True)
 step = 0
 score = 0
-"""
+
 with parallel_backend('multiprocessing'):
-    param_grid = {
-        'criterion': ('gini', 'log_loss', 'entropy'),
-        'min_samples_split': range(2, 32),
-        'max_depth': range(1, 10),
-        'min_samples_leaf': range(1, 10),
-    }
-    model = DecisionTreeClassifier()
-    grid_search = GridSearchCV(model, param_grid=param_grid, scoring='f1_micro')
-    grid_search.fit(X_train, Y_train)
-    best_tree = grid_search.best_estimator_
-    y_pred = best_tree.predict(X_test)
+    #    param_grid = {
+    #        'criterion': ('gini', 'log_loss', 'entropy'),
+    #        'min_samples_split': range(2, 32),
+    #        'max_depth': range(1, 10),
+    #        'min_samples_leaf': range(1, 10),
+    #    }
+    model = RandomForestClassifier()
+    model.fit(X_train, Y_train)
+    y_pred = model.predict(X_test)
+    #  model = DecisionTreeClassifier()
+    #    grid_search = GridSearchCV(model, param_grid=param_grid, scoring='f1_micro')
+    #    grid_search.fit(X_train, Y_train)
+    #    best_tree = grid_search.best_estimator_
+    #    y_pred = best_tree.predict(X_test)
     score_1 = f1_score(Y_test, y_pred, average='micro')
-    print(f"GridSearchCV score={score_1}")
-    print(grid_search.best_params_)
+    print(f"random forest score={score_1}")
+    #    print(grid_search.best_params_)
     fig, ax = plt.subplots(figsize=(26, 26))
-#  ConfusionMatrixDisplay(confusion_matrix(Y_test, y_pred)).plot()
-# plt.show()
+  #  ConfusionMatrixDisplay(confusion_matrix(Y_test, y_pred)).plot()
+  #  plt.show()
 """
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.45, random_state=42)
 with parallel_backend('multiprocessing'):
@@ -62,15 +60,4 @@ with parallel_backend('multiprocessing'):
         print(f'best score:{search_model.best_score_}')
     except:
         print('Illegal parameters')
-
-# model2=DecisionTreeClassifier()
-# rand_search=RandomizedSearchCV(model2,param_grid,scoring='f1_micro')
-# rand_search.fit(X_train, Y_train)
-# best_tree=rand_search.best_estimator_
-# y_pred = best_tree.predict(X_test)
-# score_2 = accuracy_score(Y_test, y_pred)
-# print(f"RandSearchCV score={score_2}")
-#  print(grid_search.best_params_)
-#  fig, ax = plt.subplots(figsize=(26, 26))
-#  ConfusionMatrixDisplay(confusion_matrix(Y_test,y_pred)).plot()
-#  plt.show()
+"""
